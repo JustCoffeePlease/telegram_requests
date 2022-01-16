@@ -1,0 +1,129 @@
+
+# FIRST WORKING CODE
+# from telethon import TelegramClient, sync
+# from icecream import ic
+
+# api_id = ***
+# api_hash = '****'
+# # all_participans = []
+# client = TelegramClient('current session', api_id, api_hash).start()
+#
+# # get all the channels that I can access
+# channels = {d.entity.username: d.entity
+#             for d in client.get_dialogs()
+#             if d.is_channel}
+# # ic(channels)
+#
+# # choose the one that I want list users from
+# channel = channels['test_telephone_123']
+# # print(channel)
+#
+# # get all the users and print them
+# for user in client.get_participants(channel):
+#     print(user.id, user.first_name, user.last_name, user.username)
+
+
+
+
+# from telethon import TelegramClient
+#
+# from telethon.tl.functions.contacts import ResolveUsernameRequest
+# from telethon.tl.functions.channels import GetAdminLogRequest
+#
+# from telethon.tl.types import InputChannel
+# from telethon.tl.types import ChannelAdminLogEventsFilter
+# from telethon.tl.types import InputUserSelf
+# from telethon.tl.types import InputUser
+#
+# # These example values won't work. You must get your own api_id and
+# # api_hash from https://my.telegram.org, under API Development.
+# api_id = *** # Your api_id
+# api_hash = '***' # Your api_hash
+# phone_number = '+7925620****' # Your phone number
+#
+# client = TelegramClient(phone_number, api_id, api_hash)
+# client.session.report_errors = False
+# client.connect()
+#
+# if not client.is_user_authorized():
+#     client.send_code_request(phone_number)
+#     client.sign_in(phone_number, input('Enter the code: '))
+#
+#
+# channel = client(ResolveUsernameRequest('msknd2')) # Your channel username
+#
+# user = client(ResolveUsernameRequest('Togor')) # Your channel admin username
+# admins = [InputUserSelf(), InputUser(user.users[0].id, user.users[0].access_hash)] # admins
+# admins = [] # No need admins for join and leave and invite filters
+#
+# filter = None # All events
+# # param: (join, leave, invite, ban, unban, kick, unkick, promote, demote, info, settings, pinned, edit, delete)
+# filter = ChannelAdminLogEventsFilter(True, True, True, False, False, False, False, False, False, False, False, False, False, False)
+#
+# result = client(GetAdminLogRequest(InputChannel(channel.chats[0].id, channel.chats[0].access_hash), '', 0, 0, 10, filter, admins))
+# ##print(result)
+#
+# for _user in result.users:
+#     ##print(_user.id)
+#     with open(''.join(['users/', str(_user.id)]), 'w') as f:
+#         f.write(str(_user.id))
+
+
+# SECOND WORKING CODE
+from telethon.sync import TelegramClient
+from datetime import date
+
+list_for_data = []
+with TelegramClient('vasilyev01', ****, '****') as client:
+    for user in client.get_participants('t.me/test_telephone_123'):
+        # print(user.id, user.username, user.phone, date.today())
+        list_for_data.append({'user_id': user.id, 'user_name': user.username, 'user_phone': user.phone,
+                              'follower_date': date.today()})
+    print(list_for_data)
+
+
+# from telethon import TelegramClient, sync
+# from datetime import date
+#
+# name = 'vasi****'
+# api_id = ****
+# api_hash = '****'
+# channel = 't.me/test_telephone_123'
+# list_for_data = []
+#
+# with TelegramClient(name, api_id, api_hash) as client:
+#     for user in client.get_participants(channel):
+#         is_followed = True
+#         # print(user.id, user.username, user.phone, date.today())
+#         list_for_data.append([date.today().strftime("%Y-%m-%d 00:00:00"), user.id, user.username,
+#                               user.phone, is_followed, ''])
+#
+#     print(list_for_data)
+
+
+# from telethon.sync import TelegramClient
+# import re
+# # import db
+#
+#
+# def likes(likes):
+#    res = []
+#    for item in likes:
+#       print(item)
+#       print(re.findall("\d+", item))
+#       if len(re.findall("\d+", item))>0:
+#          res.append(re.findall("\d+", item)[0])
+#       else: res.append("0")
+#    # print(res)
+#    return res
+#
+#
+# with TelegramClient('****', ****, '****') as client:
+#    for message in client.iter_messages('https://t.me/smirnovschool'):
+#       print(message.date, "post", message.id, message.sender_id, ':', message.text)
+#       result = re.findall(r"text=\'.........", str(message.reply_markup))
+#       if len(result):
+#          print(likes(result)[0])
+#       # if not message.replies is None:
+#       #    for comment in client.iter_messages('https://t.me/smirnovschool', reply_to=int(message.id)):
+#       #      print("comment", comment.id, comment.sender_id, ':', comment.text)
